@@ -9,6 +9,7 @@ Uma aplicação web feito em PHP para agendamento com intuito de praticar.
     - 2.1 [GET e POST](#parte02-1)
     - 2.2 [Autenticando usuário](#parte02-2)
     - 2.3 [Protegendo páginas restritas com SESSION](#parte02-3)
+    - 2.4 [Incorporando scripts](#parte02-4)
 ****
 
 ## <a name="parte02-1">Desvendando os métodos GET e POST.</a>
@@ -138,4 +139,45 @@ session_start();
   if(!($_SESSION['autenticado']) || !isset($_SESSION['autenticado'])) {
     header('Location: index.php?login=erro2');
   } 
+```
+
+## <a name="parte02-4">Incorporando scripts com include, include_once, require e require_once</a>
+
+A ideia é evitar redundância de códigos dentro de nossas aplicações.
+
+### Include
+
+```php
+include('menu.php');
+```
+> Isso facilita manutenções futuras.
+
+### Require
+
+A diferença entre os dois é bem sutil, e se dá quando não é possível localizar o arquivo.
+
+O include irá gerar um warning - Apenas um alerta
+
+O require um **fatal error** - Interrompe imediatamente o script.
+
+```php
+require 'menu.php';
+```
+
+### Include_once e Require_once
+
+A diferença é que permite a inclusão de um script apenas uma única vez.
+
+### Um exemplo na aplicação
+
+Refatorando o código é possível notar a repetição do validador de acesso em 3 páginas, sendo assim, basta separar essa parte e incluir com **require_once** (afinal é uma parte **essencial**).
+
+```php
+<?php
+  session_start();
+
+  if(!($_SESSION['autenticado']) || !isset($_SESSION['autenticado'])) {
+    header('Location: index.php?login=erro2');
+  } 
+?>
 ```

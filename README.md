@@ -1,5 +1,5 @@
 # HelpDesk
-Uma aplicação web feito em PHP para agendamento com intuíto de praticar.
+Uma aplicação web feito em PHP para agendamento com intuito de praticar.
 
 ## <a name="indice">Índice</a>
 
@@ -8,9 +8,10 @@ Uma aplicação web feito em PHP para agendamento com intuíto de praticar.
 2. [Desenvolvendo a primeira aplicação WEB com PHP](https://github.com/comicodarko/HelpDesk)
     - 2.1 [GET e POST](#parte02-1)
     - 2.2 [Autenticando usuário](#parte02-2)
+    - 2.3 [Protegendo páginas restritas com SESSION](#parte02-3)
 ****
 
-## Desvendando os métodos GET e POST.
+## <a name="parte02-1">Desvendando os métodos GET e POST.</a>
 São variáveis supeglobais, ou seja elas sempre estão disponíveis em todos os escopoas para todo o script.
 ****
 
@@ -38,7 +39,7 @@ $_GET - [name]
 [Voltar ao índice](#indice)
 ****
 
-## <a name="parte02-1">Autenticando usuário</a>
+## <a name="parte02-2">Autenticando usuário</a>
 
 Vamos receber os dados do front-end, enviar para o back-end, para que ai sim, do lado do servidor, seja possível dizer se o usuário existe ou não a aplicação.
 
@@ -108,3 +109,33 @@ if($usuario_autenticado) {
 <?php } ?> 
 ```
 > No exemplo usado, caso login esteja setado e caso ele tenha o valor de error, a div descrita será exibida.
+
+## <a name="parte02-3">Protegendo páginas restritas com SESSION</a>
+
+Nesse momento todas as páginas podem ser acessadas livremente através de uma requisição HTTP, porém em algumas aplicações WEB é necessário proteger algumas páginas de acordo com o acesso.
+
+### Sempre quer trabalhamos com sessão é fundamental utilizar a instrução session_start() sempre antes de qualquer instrução que emita ao navegador qualquer saída (output de dados). Por padrão geralmente é usado no início do script.
+
+```php
+$_SESSION
+```
+> Superglobal de sessão
+
+É possível recuperar a mesma e atribuir valores.
+```php
+$_SESSION['autenticado'] = true;
+```
+
+Isso significa que essa informação estará disponível para todos os demais scripts.
+
+> Vale lembrar que cada sessão no PHP por padrão dura por **3 horas**.
+
+Redirecionando caso não autenticado:
+
+```php
+session_start();
+
+  if(!($_SESSION['autenticado']) || !isset($_SESSION['autenticado'])) {
+    header('Location: index.php?login=erro2');
+  } 
+```

@@ -37,6 +37,14 @@
                 
     <?php } ?> 
 
+    <?php
+      if(isset($_GET['vazio'])) {   
+    ?>
+
+      <h1 class="text-center text-danger mb-0 mt-3">Por favor, preencha todos os campos</h1>
+                
+    <?php } ?> 
+
     <div class="mt-0 container">    
       <div class="row">
 

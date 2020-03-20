@@ -19,7 +19,6 @@
   }
 
   if($usuario_autenticado) {
-    echo 'Usuário autenticado';
     $_SESSION['autenticado'] = true;
     header('Location: home.php');
   } else {

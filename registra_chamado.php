@@ -1,5 +1,10 @@
 <?php
 
+  // Teste de campo vazio
+  if($_POST['titulo'] == '' || $_POST['categoria'] == '' || $_POST['descricao'] == '') {
+    header('Location: abrir_chamado.php?vazio');
+  } else {
+
   // Abrindo o arquivo
   $arquivo = fopen('arquivo.txt', 'a');
 
@@ -17,5 +22,5 @@
   fclose($arquivo);
 
   header('Location: abrir_chamado.php?sucesso');
-
+}
 ?>

@@ -10,6 +10,7 @@ Uma aplicação web feito em PHP para agendamento com intuito de praticar.
     - 2.2 [Autenticando usuário](#parte02-2)
     - 2.3 [Protegendo páginas restritas com SESSION](#parte02-3)
     - 2.4 [Incorporando scripts](#parte02-4)
+    - 2.5 [logoff](#parte02-5)
 ****
 
 ## <a name="parte02-1">Desvendando os métodos GET e POST.</a>
@@ -181,3 +182,5 @@ Refatorando o código é possível notar a repetição do validador de acesso em
   } 
 ?>
 ```
+
+## <a name="parte02-5" Encerrando a sesssão </a>

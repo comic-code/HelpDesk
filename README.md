@@ -11,6 +11,7 @@ Uma aplicação web feito em PHP para agendamento com intuito de praticar.
     - 2.3 [Protegendo páginas restritas com SESSION](#parte02-3)
     - 2.4 [Incorporando scripts](#parte02-4)
     - 2.5 [logoff](#parte02-5)
+    - 2.6 [Registrando chamados](#parte02-6)
 ****
 
 ## <a name="parte02-1">Desvendando os métodos GET e POST.</a>
@@ -183,4 +184,39 @@ Refatorando o código é possível notar a repetição do validador de acesso em
 ?>
 ```
 
-## <a name="parte02-5" Encerrando a sesssão </a>
+### <a name="parte02-5">Encerrando a sesssão </a>
+```php
+session_start();
+session_destroy();
+```
+
+## <a name="parte02-6">Registrando chamados</a>
+
+Como ainda não estamos trabalhando com banco de dados vamos fazer isso através de um arquivo TXT.
+
+Vale a pena lembrar que se todos os names estiverem definidos todo formulário será enviado para a superglobal **$_POST**.
+
+### Abrindo um arquivo
+
+```php
+$arquivo = fopen('arquivo.txt', 'a');
+```
+> Primeiro é passado o nome do arquivo e em seguida a ação, no caso a cima abre apenas para o modo de  escrita e coloca o ponteiro do arquivo no final do mesmo, caso o arquivo não exista ele tenta criá-lo.
+
+### Escrevendo em um arquivo
+```php
+fwrite($arquivo, $texto);
+```
+> Espera uma variável com fopen e o que será escrito.
+
+### Fechando um arquivo
+```php
+fclose($arquivo);
+```
+> Espera a referência de fopen
+
+### Quebrando linhas de acordo com o Sistema Operacional
+```php
+PHP_EOL
+```
+> EOL = End Of Line

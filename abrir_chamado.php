@@ -29,7 +29,15 @@
       </ul>
     </nav>
 
-    <div class="container">    
+    <?php
+      if(isset($_GET['sucesso'])) {   
+    ?>
+
+      <h1 class="text-center text-success mb-0 mt-3">Chamado realizado com sucesso!</h1>
+                
+    <?php } ?> 
+
+    <div class="mt-0 container">    
       <div class="row">
 
         <div class="card-abrir-chamado">
@@ -41,15 +49,15 @@
               <div class="row">
                 <div class="col">
                   
-                  <form>
+                  <form method="POST" action="registra_chamado.php">
                     <div class="form-group">
                       <label>Título</label>
-                      <input type="text" class="form-control" placeholder="Título">
+                      <input name="titulo" type="text" class="form-control" placeholder="Título">
                     </div>
                     
                     <div class="form-group">
                       <label>Categoria</label>
-                      <select class="form-control">
+                      <select name="categoria" class="form-control">
                         <option>Criação Usuário</option>
                         <option>Impressora</option>
                         <option>Hardware</option>
@@ -60,7 +68,7 @@
                     
                     <div class="form-group">
                       <label>Descrição</label>
-                      <textarea class="form-control" rows="3"></textarea>
+                      <textarea name="descricao" class="form-control" rows="3"></textarea>
                     </div>
 
                     <div class="row mt-5">
@@ -69,7 +77,7 @@
                       </div>
 
                       <div class="col-6">
-                        <button class="btn btn-lg btn-info btn-block" type="submit">Abrir</button>
+                        <button class="btn btn-lg btn-info btn-block" type="submit" data-toggle="modal" data-target="#sucesso">Abrir</button>
                       </div>
                     </div>
                   </form>

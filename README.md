@@ -12,6 +12,7 @@ Uma aplicação web feito em PHP para agendamento com intuito de praticar.
     - 2.4 [Incorporando scripts](#parte02-4)
     - 2.5 [logoff](#parte02-5)
     - 2.6 [Registrando chamados](#parte02-6)
+    - 2.7 [Consultando chamados](#parte02-7)
 ****
 
 ## <a name="parte02-1">Desvendando os métodos GET e POST.</a>
@@ -220,3 +221,54 @@ fclose($arquivo);
 PHP_EOL
 ```
 > EOL = End Of Line
+
+## <a name="parte02-7">Consultando chamados</a>
+
+Nesse caso precisamos abrir o arquivo.txt, ler e depois fechar.
+
+```php
+$arquivo = fopen('arquivo.txt', 'r');
+```
+> Nesse caso abrimos os arquivo apenas para leitura.
+
+Agora é necessário percorrer cada uma das linhas do nosso arquivo, para isso usaremos um laço de repetição.
+
+```php
+$arquivo = fopen('arquivo.txt', 'r');
+
+  // Enquanto houver linhas
+  while(!feof($arquivo)) {
+    fgets($arquivo);
+  }
+
+  fclose($arquivo);
+
+```
+> **feof** testa pelo fim de um arquivo (END OF FILE) e espera a referencia de um arquivo aberto
+
+> **fgets** recupera até a quebra de linha e espera a referência de um arquivo aberto
+
+### Editando a view
+
+```php
+<?php foreach($chamados as $chamado) { 
+                
+  $chamado_dados = explode('#', $chamado);
+
+  if(count($chamado_dados) < 3) {
+    continue;
+  }
+
+?>
+
+  <div class="card mb-3 bg-light">
+    <div class="card-body">
+      <h5 class="card-title"><?=$chamado_dados[0]?></h5>
+      <h6 class="card-subtitle mb-2 text-muted"><?=$chamado_dados[1]?></h6>
+      <p class="card-text"><?=$chamado_dados[2]?></p>
+    </div>
+  </div>
+
+<?php } ?>
+```
+> Vale a pena lembrar que se deve pular quando a linha for vazia (continue)

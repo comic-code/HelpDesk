@@ -1,4 +1,5 @@
 <?php
+  session_start();
 
   // Teste de campo vazio
   if($_POST['titulo'] == '' || $_POST['categoria'] == '' || $_POST['descricao'] == '') {
@@ -13,7 +14,7 @@
   $categoria = str_replace('#', '-', $_POST['categoria']);
   $descricao = str_replace('#', '-', $_POST['descricao']);
 
-  $texto = $titulo . '#' . $categoria . '#' . $descricao . PHP_EOL;
+  $texto = $_SESSION['id'] . '#' . $titulo . '#' . $categoria . '#' . $descricao . PHP_EOL;
 
   // Escrevendo no arquivo
   fwrite($arquivo, $texto);

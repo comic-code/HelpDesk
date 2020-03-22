@@ -13,6 +13,7 @@ Uma aplicação web feito em PHP para agendamento com intuito de praticar.
     - 2.5 [logoff](#parte02-5)
     - 2.6 [Registrando chamados](#parte02-6)
     - 2.7 [Consultando chamados](#parte02-7)
+    - 2.8 [Controle de perfil](#parte02-8)
 ****
 
 ## <a name="parte02-1">Desvendando os métodos GET e POST.</a>
@@ -272,3 +273,69 @@ $arquivo = fopen('arquivo.txt', 'r');
 <?php } ?>
 ```
 > Vale a pena lembrar que se deve pular quando a linha for vazia (continue)
+
+## <a name="parte02-8">Controle de perfil</a>
+
+A aplicação se dividirá em:  
+**Administrativo** - Visualiza todos os chamados.  
+**Usuário** - Visualiza apenas os próprios chamados.
+
+Será necessário atribuir um id a cada usuário e recuperá-lo na lógica de autenticação.
+```php
+foreach ($usuarios_app as $user) {
+    
+  if($user['email'] == $_POST['email'] && $user['senha'] ==$_POST['senha']) {
+    $usuario_autenticado = true;
+    //aqui
+    $usuarios_id = $user[id];
+  }
+}
+
+if($usuario_autenticado) {
+  $_SESSION['autenticado'] = true;
+  //aqui
+  $_SESSION['id'] = $usuarios_id;
+  header('Location: home.php');
+} else {
+  $_SESSION['autenticado'] = false;
+  header('Location: index.php?login=erro');
+}
+```
+E na hora de escrever no arquivo.txt:
+
+```php
+ $texto = $_SESSION['id'] . '#' . $titulo . '#' . $categoria . '#' . $descricao . PHP_EOL;
+ ```
+
+### Agora para a difinição dos perfis
+
+```php
+$perfis = [1 => 'Administrativo', 2 => 'Usuário'];
+```
+
+E recuperação desses valores.
+
+```php
+foreach ($usuarios_app as $user) {
+    
+    if($user['email'] == $_POST['email'] && $user['senha'] == $_POST['senha']) {
+      $usuario_autenticado = true;
+      $usuarios_id = $user[id];
+      //aqui
+      $usuarios_perfil_id = $user['perfil_id'];
+    }
+  }
+
+  if($usuario_autenticado) {
+    $_SESSION['autenticado'] = true;
+    $_SESSION['id'] = $usuarios_id;
+    //aqui
+    $_SESSION['perfil_id'] = $usuarios_perfil_id;
+    header('Location: home.php');
+  } else {
+    $_SESSION['autenticado'] = false;
+    header('Location: index.php?login=erro');
+```
+De posse dessas informações podemos implementar nossas regras de negócio.
+
+Precisamos aplicar alguns testes, caso seja administrativo não se tem nenhum filtro, o filtro deve ser aplicado no foreach que mostra os chamados.
